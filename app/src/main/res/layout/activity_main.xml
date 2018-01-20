@@ -19,25 +19,25 @@
 		app:layout_constraintTop_toTopOf="parent">
 
 		<Button
-			android:id="@+id/calculatorButton"
+			android:id="@+id/calculator_button"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/calculator_button_text" />
 
 		<Button
-			android:id="@+id/compassButton"
+			android:id="@+id/compass_button"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/compass_button_text" />
 
 		<Button
-			android:id="@+id/mapButton"
+			android:id="@+id/map_button"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/map_button_text" />
 
 		<Button
-			android:id="@+id/gpsStatusButton"
+			android:id="@+id/gps_status_button"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/gps_status_button_text" />
