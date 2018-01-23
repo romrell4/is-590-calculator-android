@@ -12,12 +12,12 @@ import android.support.v4.content.ContextCompat
 import android.widget.TextView
 
 class CompassActivity : AppCompatActivity(), LocationListener {
-    var latitude: TextView? = null
-    var longitude: TextView? = null
-    var altitude: TextView? = null
-    var accuracy: TextView? = null
-    var speed: TextView? = null
-    var provider: TextView? = null
+    private var latitude: TextView? = null
+    private var longitude: TextView? = null
+    private var altitude: TextView? = null
+    private var accuracy: TextView? = null
+    private var speed: TextView? = null
+    private var provider: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
