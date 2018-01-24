@@ -1,17 +1,16 @@
 package com.example.romrell4.calculator
 
 import android.Manifest
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.google.android.gms.location.*
 
-class CompassActivity : AppCompatActivity(), LocationListener {
+class CompassActivity : AppCompatActivity() {
     private var latitude: TextView? = null
     private var longitude: TextView? = null
     private var altitude: TextView? = null
@@ -30,14 +29,24 @@ class CompassActivity : AppCompatActivity(), LocationListener {
         speed = findViewById(R.id.speed)
         provider = findViewById(R.id.provider)
 
-        val locationService = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationService.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         }
+
+        val request = LocationRequest()
+        request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        request.interval = 5000
+        request.fastestInterval = 1000
+        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(request, object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult?) {
+                print(p0?.locations)
+                onLocationChanged(p0?.locations?.last())
+            }
+        }, null)
     }
 
-    override fun onLocationChanged(location: Location?) {
+    fun onLocationChanged(location: Location?) {
         latitude?.text = location?.latitude.toString()
         longitude?.text = location?.longitude.toString()
         altitude?.text = getString(R.string.altitude_format, location?.altitude.toString())
@@ -46,9 +55,4 @@ class CompassActivity : AppCompatActivity(), LocationListener {
         provider?.text = location?.provider
     }
 
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-
-    override fun onProviderEnabled(provider: String?) {}
-
-    override fun onProviderDisabled(provider: String?) {}
 }
