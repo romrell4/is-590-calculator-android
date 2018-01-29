@@ -3,7 +3,7 @@ package com.example.romrell4.calculator
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,11 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.calculator_button).setOnClickListener {
-            startActivity(Intent(this, CalculatorActivity::class.java))
-        }
-        findViewById<Button>(R.id.compass_button).setOnClickListener {
-            startActivity(Intent(this, CompassActivity::class.java))
-        }
+        calculator_button.setOnClickListener { startActivity(Intent(this, CalculatorActivity::class.java)) }
+        compass_button.setOnClickListener { startActivity(Intent(this, CompassActivity::class.java)) }
     }
 }

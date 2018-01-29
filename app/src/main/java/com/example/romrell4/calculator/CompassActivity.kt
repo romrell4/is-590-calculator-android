@@ -6,28 +6,30 @@ import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_compass2.*
-import kotlinx.android.synthetic.main.list_item.*
 
 class CompassActivity : AppCompatActivity() {
-    private lateinit var adapter: InfoRecyclerAdapter
+    private var adapter = InfoRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compass2)
 
-        val list = listOf(Pair("Latitude", "Test"))
-        adapter = InfoRecyclerAdapter(list)
-
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        //This will add the "Loading" messages
+        adapter.updateLocation(null)
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
@@ -39,32 +41,28 @@ class CompassActivity : AppCompatActivity() {
         request.fastestInterval = 1000
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(request, object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult?) {
-                print(p0?.locations)
-                onLocationChanged(p0?.locations?.last())
+                adapter.updateLocation(p0?.locations?.last())
             }
         }, null)
     }
 
-    fun onLocationChanged(location: Location?) {
-        adapter.list = listOf(
-                Pair("Latitude", location?.latitude.toString()),
-                Pair("Longitude", location?.longitude.toString())
-        )
-
-//        latitude.text = location?.latitude.toString()
-//        longitude.text = location?.longitude.toString()
-//        altitude.text = getString(R.string.altitude_format, location?.altitude.toString())
-//        accuracy.text = getString(R.string.accuracy_format, location?.accuracy.toString())
-//        speed.text = getString(R.string.speed_format, location?.speed.toString())
-//        provider.text = location?.provider
-    }
-
-    inner class InfoRecyclerAdapter(list: List<Pair<String, String>>) : RecyclerView.Adapter<InfoRecyclerAdapter.InfoViewHolder>() {
-        var list: List<Pair<String, String>> = list
+    inner class InfoRecyclerAdapter : RecyclerView.Adapter<InfoRecyclerAdapter.InfoViewHolder>() {
+        private var list: List<Pair<String, String?>> = emptyList()
             set(value) {
                 field = value
                 notifyDataSetChanged()
             }
+
+        fun updateLocation(location: Location?) {
+            list = listOf(
+                    Pair("Latitude", if (location != null) location.latitude.toString() else getString(R.string.loading)),
+                    Pair("Longitude", if (location != null) location.longitude.toString() else getString(R.string.loading)),
+                    Pair("Altitude", if (location != null) getString(R.string.altitude_format, location.altitude.toString()) else getString(R.string.loading)),
+                    Pair("Accuracy", if (location != null) getString(R.string.accuracy_format, location.accuracy.toString()) else getString(R.string.loading)),
+                    Pair("Speed", if (location != null) getString(R.string.speed_format, location.speed.toString()) else getString(R.string.loading)),
+                    Pair("Provider", if (location != null) location.provider else getString(R.string.loading))
+            )
+        }
 
         override fun getItemCount() = list.size
 
@@ -77,8 +75,10 @@ class CompassActivity : AppCompatActivity() {
         }
 
         inner class InfoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            private val textView = view.findViewById<TextView>(R.id.textView)
+            private val detailTextView = view.findViewById<TextView>(R.id.detailTextView)
 
-            fun bind(pair: Pair<String, String>) {
+            fun bind(pair: Pair<String, String?>) {
                 textView.text = pair.first
                 detailTextView.text = pair.second
             }

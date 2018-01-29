@@ -1,3 +1,3 @@
-# IS 590R HW 4
+# IS 590R HW 5
 
-In this homework, I converted my HW 3 to use only ConstraintLayout. I found this to be helpful, however, I still wish I could figure out how to use the RecyclerView instead of using copied and pasted TextViews. It wasn't very difficult to replace the Linear and Relative layouts in the CompassActivity, but I found that the Android Studio UI was a lot more tedious than Xcode. The UI started to look REALLY ugly, whereas the same constraints in Xcode would have looked fairly clean. I also haven't learned how to have the idea of an inequality for the constraint (greater than or equal to...). Still work to come!
+In this homework, I tried my best to get a recycler view working. I kept having issues until I finally realized that I needed to set the layout manager for the dang recycler view! I can't believe that I missed that twice! I got it working in Kotlin, which was cool. The results are in my compass activity.
