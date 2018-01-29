@@ -1,6 +1,7 @@
 package com.example.romrell4.calculator
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_compass.*
 
+private const val LOCATION_REQUEST_CODE = 1
+
 class CompassActivity : AppCompatActivity() {
     private var adapter = InfoRecyclerAdapter()
 
@@ -32,9 +35,23 @@ class CompassActivity : AppCompatActivity() {
         adapter.updateLocation(null)
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST_CODE)
+        } else {
+            requestLocationUpdates()
         }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                requestLocationUpdates()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestLocationUpdates() {
         val request = LocationRequest()
         request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         request.interval = 5000
@@ -55,12 +72,12 @@ class CompassActivity : AppCompatActivity() {
 
         fun updateLocation(location: Location?) {
             list = listOf(
-                    Pair("Latitude", if (location != null) location.latitude.toString() else getString(R.string.loading)),
-                    Pair("Longitude", if (location != null) location.longitude.toString() else getString(R.string.loading)),
-                    Pair("Altitude", if (location != null) getString(R.string.altitude_format, location.altitude.toString()) else getString(R.string.loading)),
-                    Pair("Accuracy", if (location != null) getString(R.string.accuracy_format, location.accuracy.toString()) else getString(R.string.loading)),
-                    Pair("Speed", if (location != null) getString(R.string.speed_format, location.speed.toString()) else getString(R.string.loading)),
-                    Pair("Provider", if (location != null) location.provider else getString(R.string.loading))
+                    Pair(getString(R.string.latitude_label), location?.latitude?.toString() ?: getString(R.string.loading)),
+                    Pair(getString(R.string.longitude_label), location?.longitude?.toString() ?: getString(R.string.loading)),
+                    Pair(getString(R.string.altitude_label), if (location != null) getString(R.string.altitude_format, location.altitude.toString()) else getString(R.string.loading)),
+                    Pair(getString(R.string.accuracy_label), if (location != null) getString(R.string.accuracy_format, location.accuracy.toString()) else getString(R.string.loading)),
+                    Pair(getString(R.string.speed_label), if (location != null) getString(R.string.speed_format, location.speed.toString()) else getString(R.string.loading)),
+                    Pair(getString(R.string.provider_label), location?.provider ?: getString(R.string.loading))
             )
         }
 
