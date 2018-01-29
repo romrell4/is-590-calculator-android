@@ -16,14 +16,14 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import kotlinx.android.synthetic.main.activity_compass2.*
+import kotlinx.android.synthetic.main.activity_compass.*
 
 class CompassActivity : AppCompatActivity() {
     private var adapter = InfoRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_compass2)
+        setContentView(R.layout.activity_compass)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

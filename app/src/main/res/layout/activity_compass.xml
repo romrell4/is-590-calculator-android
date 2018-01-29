@@ -18,139 +18,17 @@
 		app:srcCompat="@drawable/compass"
 		tools:ignore="ContentDescription" />
 
-	<TextView
-		android:id="@+id/latitude_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="8dp"
-		android:layout_marginTop="16dp"
-		android:text="@string/latitude_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/compass_image" />
-
-	<TextView
-		android:id="@+id/latitude"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/recyclerView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginBottom="8dp"
 		android:layout_marginEnd="8dp"
 		android:layout_marginStart="8dp"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/latitude_label"
+		android:layout_marginTop="8dp"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/latitude_label"
-		app:layout_constraintTop_toTopOf="@+id/latitude_label" />
-
-	<TextView
-		android:id="@+id/longitude_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
-		android:text="@string/longitude_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="@+id/latitude_label"
-		app:layout_constraintTop_toBottomOf="@+id/latitude_label" />
-
-	<TextView
-		android:id="@+id/longitude"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/longitude_label"
-		app:layout_constraintEnd_toEndOf="@+id/latitude"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/longitude_label"
-		app:layout_constraintTop_toTopOf="@+id/longitude_label" />
-
-	<TextView
-		android:id="@+id/altitude_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
-		android:text="@string/altitude_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="@+id/latitude_label"
-		app:layout_constraintTop_toBottomOf="@+id/longitude_label" />
-
-	<TextView
-		android:id="@+id/altitude"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/altitude_label"
-		app:layout_constraintEnd_toEndOf="@+id/latitude"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/altitude_label"
-		app:layout_constraintTop_toTopOf="@+id/altitude_label" />
-
-	<TextView
-		android:id="@+id/accuracy_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
-		android:text="@string/accuracy_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="@+id/latitude_label"
-		app:layout_constraintTop_toBottomOf="@+id/altitude_label" />
-
-	<TextView
-		android:id="@+id/accuracy"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/accuracy_label"
-		app:layout_constraintEnd_toEndOf="@+id/latitude"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/accuracy_label"
-		app:layout_constraintTop_toTopOf="@+id/accuracy_label" />
-
-	<TextView
-		android:id="@+id/speed_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
-		android:text="@string/speed_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="@+id/latitude_label"
-		app:layout_constraintTop_toBottomOf="@+id/accuracy_label" />
-
-	<TextView
-		android:id="@+id/speed"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/speed_label"
-		app:layout_constraintEnd_toEndOf="@+id/latitude"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/speed_label"
-		app:layout_constraintTop_toTopOf="@+id/speed_label" />
-
-	<TextView
-		android:id="@+id/provider_label"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
-		android:text="@string/provider_label"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintStart_toStartOf="@+id/latitude_label"
-		app:layout_constraintTop_toBottomOf="@+id/speed_label" />
-
-	<TextView
-		android:id="@+id/provider"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/loading"
-		android:textAppearance="@android:style/TextAppearance.Material.Medium"
-		app:layout_constraintBottom_toBottomOf="@+id/provider_label"
-		app:layout_constraintEnd_toEndOf="@+id/latitude"
-		app:layout_constraintHorizontal_bias="1.0"
-		app:layout_constraintStart_toEndOf="@+id/provider_label"
-		app:layout_constraintTop_toTopOf="@+id/provider_label" />
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/compass_image" />
 
 </android.support.constraint.ConstraintLayout>
